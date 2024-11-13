@@ -19,7 +19,7 @@ default_config = {
     "raw_lang": f"{configDir}/en_us.json"
 }
 
-@new_thread(f'ConfigLoader: {plgSelf["id"]}')
+@new_thread('ConfigLoader: mg_events')
 def check_config(server: PluginServerInterface):
     global config
     server.logger.info("Supported events at present: death, advancement.")
@@ -42,6 +42,7 @@ def load_config(server: PluginServerInterface):
             langRegion = None
         lang = lang_loader(rawLangPath)
         server.logger.info("Loading plugin finished!")
+        server.logger.info(plgSelf)
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")
