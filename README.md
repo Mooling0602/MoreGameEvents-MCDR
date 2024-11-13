@@ -1,5 +1,5 @@
 # MoreGameEvents-MCDR
-向MCDR添加更多的原版游戏事件！
+向MCDR添加更多的游戏事件！
 
 目前尚处于开发中状态。
 
