@@ -2,7 +2,7 @@ import re
 
 from mcdreforged.api.all import *
 from jtl_api import * # type: ignore
-from ..utils import event, content, match_death, GameEventMessage
+from ..utils import content, match_death, GameEventMessage
 
 class PlayerDeathMessage(GameEventMessage):
     def __init__(self, player: str, event, content: dict):
@@ -28,9 +28,7 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
             killer = placeholder_to_content.get(2, None)
             weapon = placeholder_to_content.get(3, None)
 
-    eventInstance = event()
-    eventInstance = "death"
-    eventInstance.raw = key
+    event = key
 
     contentInstance = content()
     contentInstance.lang = langRegion
@@ -48,6 +46,6 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     if event == "death":
         server.logger.info(f"Parsed death message killer: {content.death.killer}")
         server.logger.info(f"Parsed death message weapon: {content.death.weapon}")
-    eventInstance = PlayerDeathMessage(player, eventInstance, contentInstance)
-    server.dispatch_event(eventInstance, (player, eventInstance, contentInstance))
+    eventInstance = PlayerDeathMessage(player, event, contentInstance)
+    server.dispatch_event(eventInstance, (player, event, contentInstance))
     server.logger.info("Dispatching death event...")
