@@ -23,19 +23,17 @@ def match_message(event: str, lang_path, content):
                 value = lang.get(key, None)
                 if value:
                     value = re.sub(r'%(\d+)\$s', r'(?P<var\1>.+)', value)
-                    match_dict[key] = value
-                    for key, value in match_dict.items():
-                        match = re.fullmatch(value, content)
-                        if match:
-                            return key, match.groupdict()
+                    match_dict[key] = re.compile(value)
+                    match = match_dict[key].fullmatch(content)
+                    if match:
+                        return key, match.groupdict()
             if event == "chat.type.advancement":
                 if value:
                     value = re.sub(r'%s', r'(?P<var1>.+)', value)
-                    match_dict[key] = value
-                    for key, value in match_dict.items():
-                        match = re.fullmatch(value, content)
-                        if match:
-                            return key, match.groupdict()
+                    match_dict[key] = re.compile(value)
+                    match = match_dict[key].fullmatch(content)
+                    if match:
+                        return key, match.groupdict()
     return None, None
 
 def match_death(lang_path, content):
