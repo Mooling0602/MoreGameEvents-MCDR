@@ -3,6 +3,8 @@ import re
 from jtl_api import lang_loader # type: ignore
 from mcdreforged.api.all import *
 
+psi = ServerInterface.psi()
+
 class GameEventMessage(PluginEvent):
     def __init__(self, player:str, event:str, content: dict):
         super().__init__('GameEventMessage')
@@ -25,6 +27,7 @@ class content(Serializable):
 
 def match_message(event: str, lang_path, content):
     global match_dict
+    psi.logger.info(f"{lang_path}")
     lang = lang_loader(lang_path)
     for key in lang.keys():
         if key.startswith(f"{event}."):

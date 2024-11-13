@@ -13,8 +13,8 @@ class PlayerDeathMessage(GameEventMessage):
         self.content = content
 
 @new_thread('EventListen: on_player_death')
-def main(server: PluginServerInterface, info: Info, lang):
-    key, _ = match_death(lang, info.content)
+def main(server: PluginServerInterface, info: Info, lang_path):
+    key, _ = match_death(lang_path, info.content)
     if key:
         rawFormat = parseValue(lang, key) # type: ignore
         matches_rawFormat = re.compile(r"%(\d+)\$s").findall(rawFormat)

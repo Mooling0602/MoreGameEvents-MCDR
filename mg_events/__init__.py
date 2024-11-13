@@ -10,4 +10,4 @@ def on_load(server: PluginServerInterface, prev_module):
 
 def on_info(server: PluginServerInterface, info: Info):
     if info.is_from_server:
-        mg_events.events.death.main(rawLangPath)
+        mg_events.events.death.main(server, info, rawLangPath)
