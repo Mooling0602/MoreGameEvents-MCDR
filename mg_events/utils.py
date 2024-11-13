@@ -5,6 +5,8 @@ from mcdreforged.api.all import *
 
 psi = ServerInterface.psi()
 
+match_dict = {}
+
 class GameEventMessage(PluginEvent):
     def __init__(self, player:str, event:str, content: dict):
         super().__init__('GameEventMessage')
