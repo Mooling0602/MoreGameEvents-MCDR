@@ -19,6 +19,7 @@ class PlayerDeathMessage(PluginEvent):
 def main(server: PluginServerInterface, info: Info):
     key, _ = match_death(info.content)
     if key:
+        print(_)
         rawFormat = parseValue(lang, key) # type: ignore
         matches_rawFormat = placeholder_regex.findall(rawFormat)
         regex_template = re.escape(rawFormat)
