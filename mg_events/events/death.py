@@ -3,7 +3,6 @@ import re
 from mcdreforged.api.all import *
 from jtl_api import * # type: ignore
 from ..utils import event, content, match_death, GameEventMessage
-from ..config import langRegion
 
 class PlayerDeathMessage(GameEventMessage):
     def __init__(self, player: str, event, content: dict):
@@ -13,8 +12,7 @@ class PlayerDeathMessage(GameEventMessage):
         self.content = content
 
 @new_thread('EventListen: on_player_death')
-def main(server: PluginServerInterface, info: Info, lang_path):
-    server.logger.info(f"main: {lang_path}")
+def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     key, _ = match_death(lang_path, info.content)
     if key:
         rawFormat = parseValue(lang, key) # type: ignore
