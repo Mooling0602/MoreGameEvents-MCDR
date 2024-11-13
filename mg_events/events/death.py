@@ -40,8 +40,7 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     contentInstance.death = deathInstance
 
     server.logger.info(f"Parsed player: {player} death event")
-    server.logger.info(f"Parsed message kind: {event}")
-    server.logger.info(f"Parsed message tr key: {event.raw}")
+    server.logger.info(f"Parsed message tr key: {event}")
     server.logger.info(f"Parsed message language: {content.lang}")
     if event == "death":
         server.logger.info(f"Parsed death message killer: {content.death.killer}")
