@@ -32,23 +32,23 @@ def main(server: PluginServerInterface, info: Info):
             killer = placeholder_to_content.get(2, None)
             weapon = placeholder_to_content.get(3, None)
 
-    event = key
+            event = key
 
-    contentInstance = content()
-    contentInstance.lang = langRegion
+            contentInstance = content()
+            contentInstance.lang = langRegion
 
-    deathInstance = contentInstance.death()
-    deathInstance.killer = killer
-    deathInstance.weapon = weapon
-    deathInstance.raw = info.content
-    contentInstance.death = deathInstance
+            deathInstance = contentInstance.death()
+            deathInstance.killer = killer
+            deathInstance.weapon = weapon
+            deathInstance.raw = info.content
+            contentInstance.death = deathInstance
 
-    server.logger.info(f"Detected player: {player} death event")
-    server.logger.info(f"Parsed message tr key: {event}")
-    server.logger.info(f"Parsed message language: {contentInstance.lang}")
-    if re.search(r"death.*", event):
-        server.logger.info(f"Parsed death message killer: {contentInstance.death.killer}")
-        server.logger.info(f"Parsed death message weapon: {contentInstance.death.weapon}")
-    eventInstance = PlayerDeathMessage(player, event, contentInstance)
-    server.dispatch_event(eventInstance, (player, event, contentInstance))
-    server.logger.info("Dispatching death event...")
+            server.logger.info(f"Detected player: {player} death event")
+            server.logger.info(f"Parsed message tr key: {event}")
+            server.logger.info(f"Parsed message language: {contentInstance.lang}")
+            if re.search(r"death.*", event):
+                server.logger.info(f"Parsed death message killer: {contentInstance.death.killer}")
+                server.logger.info(f"Parsed death message weapon: {contentInstance.death.weapon}")
+            eventInstance = PlayerDeathMessage(player, event, contentInstance)
+            server.dispatch_event(eventInstance, (player, event, contentInstance))
+            server.logger.info("Dispatching death event...")
