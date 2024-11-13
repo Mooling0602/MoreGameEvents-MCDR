@@ -50,6 +50,3 @@ def main(server: PluginServerInterface, info: Info, lang):
     eventInstance = PlayerDeathMessage(player, eventInstance, contentInstance)
     server.dispatch_event(eventInstance, (player, eventInstance, contentInstance))
     server.logger.info("Dispatching death event...")
-
-if __name__ == '__main__':
-    main()
