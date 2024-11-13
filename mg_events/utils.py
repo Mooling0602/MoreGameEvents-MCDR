@@ -14,7 +14,7 @@ class GameEventMessage(PluginEvent):
         self.event = event
         self.content = content
 
-class event(str, Serializable):
+class event(str):
     def __new__(cls, raw: str):
         instance = str.__new__(cls, raw)
         instance.raw = raw
