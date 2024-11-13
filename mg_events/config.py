@@ -10,6 +10,7 @@ MCDRConfig = psi.get_mcdr_config()
 serverDir = MCDRConfig["working_directory"]
 configDir = psi.get_data_folder()
 plgSelf = psi.get_self_metadata()
+plgLoaded = False
 
 geyser_config = {
     "raw_lang": f"{serverDir}/plugins/Geyser-Spigot/locales/en_us.json"
@@ -33,7 +34,7 @@ def check_config(server: PluginServerInterface):
     load_config(server)
 
 def load_config(server: PluginServerInterface):
-    global rawLangPath, langRegion, lang
+    global rawLangPath, langRegion, lang, plgLoaded
     rawLangPath = config["raw_lang"]
     if os.path.exists(rawLangPath):
         server.logger.info("Lang file exists, loading plugin...")
@@ -42,6 +43,7 @@ def load_config(server: PluginServerInterface):
             langRegion = None
         lang = lang_loader(rawLangPath)
         server.logger.info("Loading plugin finished!")
+        plgLoaded = True
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")
