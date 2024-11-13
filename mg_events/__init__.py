@@ -1,4 +1,4 @@
-import events.death
+import mg_events.events.death
 
 from mcdreforged.api.all import *
 
@@ -10,4 +10,4 @@ def on_load(server: PluginServerInterface, prev_module):
 
 def on_info(server: PluginServerInterface, info: Info):
     if info.is_from_server:
-        events.death(rawLangPath)
+        mg_events.events.death(rawLangPath)
