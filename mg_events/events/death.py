@@ -28,7 +28,8 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
             killer = placeholder_to_content.get(2, None)
             weapon = placeholder_to_content.get(3, None)
 
-    eventInstance = event("death")
+    eventInstance = event()
+    eventInstance = "death"
     eventInstance.raw = key
 
     contentInstance = content()
