@@ -1,7 +1,7 @@
 import re
 
-from jtl_api import lang_loader # type: ignore
 from mcdreforged.api.all import *
+from mg_events.config import lang
 
 psi = ServerInterface.psi()
 
@@ -14,9 +14,8 @@ class content(Serializable):
         killer: str
         weapon: str
 
-def match_message(event: str, lang_path, content):
+def match_message(event: str, content):
     global match_dict
-    lang = lang_loader(lang_path)
     for key in lang.keys():
         if key.startswith(f"{event}."):
             if event == "death":
@@ -36,10 +35,10 @@ def match_message(event: str, lang_path, content):
                         return key, match.groupdict()
     return None, None
 
-def match_death(lang_path, content):
-    key, _ = match_message("death", lang_path, content)
+def match_death(content):
+    key, _ = match_message("death", content)
     return key, _
 
-def match_advancement(lang_path, content):
-    key, _ = match_message("chat.type.advancement", lang_path, content)
+def match_advancement(content):
+    key, _ = match_message("chat.type.advancement", content)
     return key, _

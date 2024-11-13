@@ -1,8 +1,8 @@
 import re
 
 from mcdreforged.api.all import *
-from jtl_api import * # type: ignore
 from ..utils import content, match_death
+from ..config import lang, langRegion
 
 death_regex = re.compile(r"death.*")
 placeholder_regex = re.compile(r"%(\d+)\$s")
@@ -15,10 +15,10 @@ class PlayerDeathMessage(PluginEvent):
         self.content = content
 
 # @new_thread('EventListen: on_player_death')
-def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
-    key, _ = match_death(lang_path, info.content)
+def main(server: PluginServerInterface, info: Info):
+    key, _ = match_death(info.content)
     if key:
-        rawFormat = parseValue(lang_path, key) # type: ignore
+        rawFormat = parseValue(lang, key) # type: ignore
         matches_rawFormat = placeholder_regex.findall(rawFormat)
         regex_template = re.escape(rawFormat)
         regex_template = regex_template.replace(r"%1\$s", r"(.+)").replace(r"%2\$s", r"(.+)").replace(r"%3\$s", r"\[(.+)\]|(.+)")
@@ -42,7 +42,7 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     deathInstance.raw = info.content
     contentInstance.death = deathInstance
 
-    server.logger.info(f"Parsed player: {player} death event")
+    server.logger.info(f"Detected player: {player} death event")
     server.logger.info(f"Parsed message tr key: {event}")
     server.logger.info(f"Parsed message language: {contentInstance.lang}")
     if re.search(r"death.*", event):

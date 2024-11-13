@@ -2,6 +2,7 @@ import os
 import re
 
 from mcdreforged.api.all import *
+from jtl_api import lang_loader # type: ignore
 
 psi = ServerInterface.psi()
 
@@ -30,14 +31,14 @@ def load_config(server: PluginServerInterface):
         config = server.load_config_simple('config.json', default_config)
 
 def check_config(server: PluginServerInterface):
-    global rawLangPath, langRegion
+    global rawLangPath, langRegion, lang
     rawLangPath = config["raw_lang"]
     if os.path.exists(rawLangPath):
         server.logger.info("Lang file exists, loading plugin...")
         langRegion = os.path.splitext(os.path.basename(rawLangPath))[0]
         if not re.match(r'^[a-z]{2}_[a-z]{2}$', langRegion):
             langRegion = None
-        return rawLangPath, langRegion
+        lang = lang_loader(rawLangPath)
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")

@@ -7,8 +7,7 @@
 		"zh_cn": "向MCDR添加更多的游戏事件！"
 	},
 	"dependencies": {
-		"mcdreforged": ">=2.1.0",
-        "jtl_api": ">=0.1.2"
+		"mcdreforged": ">=2.1.0"
 	},
 	"author": "Mooling0602",
     "link": "https://github.com/Mooling0602/MoreGameEvents-MCDR"
