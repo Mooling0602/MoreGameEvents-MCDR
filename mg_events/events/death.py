@@ -37,6 +37,7 @@ def main(server: PluginServerInterface, info: Info, lang):
     deathInstance = contentInstance.death()
     deathInstance.killer = killer
     deathInstance.weapon = weapon
+    deathInstance.raw = info.content
     contentInstance.death = deathInstance
 
     server.logger.info(f"Parsed player: {player} death event")
