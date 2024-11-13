@@ -30,7 +30,6 @@ def load_config(server: PluginServerInterface):
         config = server.load_config_simple('config.json', geyser_config)
     else:
         config = server.load_config_simple('config.json', default_config)
-    check_config()
 
 def check_config(server: PluginServerInterface):
     global rawLangPath, langRegion
