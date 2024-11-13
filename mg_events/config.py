@@ -42,8 +42,8 @@ def load_config(server: PluginServerInterface):
             langRegion = None
         lang = lang_loader(rawLangPath)
         server.logger.info("Loading plugin finished!")
-        server.logger.info(plgSelf)
+        server.logger.info(plgSelf.id)
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")
-        server.unload_plugin(plgSelf["id"])
+        server.unload_plugin(plgSelf.id)
