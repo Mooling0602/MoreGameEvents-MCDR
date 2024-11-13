@@ -16,7 +16,7 @@ def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     server.logger.info(f"Received: {lang_path}")
     key, _ = match_death(lang_path, info.content)
     if key:
-        rawFormat = parseValue(lang, key) # type: ignore
+        rawFormat = parseValue(lang_path, key) # type: ignore
         matches_rawFormat = re.compile(r"%(\d+)\$s").findall(rawFormat)
         regex_template = re.escape(rawFormat).replace(r"%1\$s", r"(.+)").replace(r"%2\$s", r"(.+)").replace(r"%3\$s", r"\[(.+)\]|(.+)")
         content_matches = re.match(regex_template, info.content)
