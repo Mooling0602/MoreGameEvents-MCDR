@@ -14,7 +14,7 @@ class PlayerDeathMessage(PluginEvent):
         self.event = event
         self.content = content
 
-@new_thread('EventListen: on_player_death')
+# @new_thread('EventListen: on_player_death')
 def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
     key, _ = match_death(lang_path, info.content)
     if key:
