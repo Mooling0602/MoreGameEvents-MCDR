@@ -54,7 +54,9 @@ def match_message(event: str, lang_path, content):
 
 def match_death(lang_path, content):
     psi.logger.info(f"Match {lang_path}")
-    match_message("death", lang_path, content)
+    key, _ = match_message("death", lang_path, content)
+    return key, _
 
 def match_advancement(lang_path, content):
-    match_message("chat.type.advancement", lang_path, content)
+    key, _ = match_message("chat.type.advancement", lang_path, content)
+    return key, _
