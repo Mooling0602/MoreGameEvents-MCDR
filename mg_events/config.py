@@ -19,7 +19,8 @@ default_config = {
     "raw_lang": f"{configDir}/en_us.json"
 }
 
-def load_config(server: PluginServerInterface):
+@new_thread(f'ConfigLoader: {plgSelf["id"]}')
+def check_config(server: PluginServerInterface):
     global config
     server.logger.info("Supported events at present: death, advancement.")
     if os.path.exists(geyser_config["raw_lang"]):
@@ -29,8 +30,9 @@ def load_config(server: PluginServerInterface):
         config = server.load_config_simple('config.json', geyser_config)
     else:
         config = server.load_config_simple('config.json', default_config)
+    load_config(server)
 
-def check_config(server: PluginServerInterface):
+def load_config(server: PluginServerInterface):
     global rawLangPath, langRegion, lang
     rawLangPath = config["raw_lang"]
     if os.path.exists(rawLangPath):
@@ -39,6 +41,7 @@ def check_config(server: PluginServerInterface):
         if not re.match(r'^[a-z]{2}_[a-z]{2}$', langRegion):
             langRegion = None
         lang = lang_loader(rawLangPath)
+        server.logger.info("Loading plugin finished!")
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")
