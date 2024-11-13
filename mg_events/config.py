@@ -8,7 +8,7 @@ psi = ServerInterface.psi()
 MCDRConfig = psi.get_mcdr_config()
 serverDir = MCDRConfig["working_directory"]
 configDir = psi.get_data_folder()
-plgSelf = psi.get_self_metadata()["id"]
+plgSelf = psi.get_self_metadata()
 rawLangPath = None
 langRegion = None
 
@@ -43,4 +43,4 @@ def check_config(server: PluginServerInterface):
     else:
         server.logger.error("Lang file not exists! Please prepare for a one and put in the config folder.")
         server.logger.info(f"Plugin config folder is: {configDir}")
-        server.unload_plugin(plgSelf)
+        server.unload_plugin(plgSelf["id"])
