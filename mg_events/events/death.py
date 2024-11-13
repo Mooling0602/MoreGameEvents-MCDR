@@ -13,7 +13,6 @@ class PlayerDeathMessage(PluginEvent):
 
 @new_thread('EventListen: on_player_death')
 def main(server: PluginServerInterface, info: Info, lang_path, langRegion):
-    server.logger.info(f"Received: {lang_path}")
     key, _ = match_death(lang_path, info.content)
     if key:
         rawFormat = parseValue(lang_path, key) # type: ignore
