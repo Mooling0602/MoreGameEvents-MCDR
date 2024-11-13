@@ -7,13 +7,6 @@ psi = ServerInterface.psi()
 
 match_dict = {}
 
-class GameEventMessage(PluginEvent):
-    def __init__(self, player:str, event:str, content: dict):
-        super().__init__('GameEventMessage')
-        self.player = player
-        self.event = event
-        self.content = content
-
 class content(Serializable):
     lang: str
     advancement: str

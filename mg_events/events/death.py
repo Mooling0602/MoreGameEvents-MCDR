@@ -2,10 +2,10 @@ import re
 
 from mcdreforged.api.all import *
 from jtl_api import * # type: ignore
-from ..utils import content, match_death, GameEventMessage
+from ..utils import content, match_death
 
-class PlayerDeathMessage(GameEventMessage):
-    def __init__(self, player: str, event, content: dict):
+class PlayerDeathMessage(PluginEvent):
+    def __init__(self, player: str, event: str, content: dict):
         super().__init__('PlayerDeathMessage')
         self.player = player
         self.event = event
