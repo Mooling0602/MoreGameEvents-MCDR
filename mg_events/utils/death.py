@@ -35,8 +35,6 @@ def parse(template, message):
         "weapon": None
     }
     for key, value in template.items():
-        with open('./log_file.txt', "a", encoding="utf-8") as f:
-            f.write(f" - Key: {key}, Regex: {value}, Message: {message}\n")
         pattern = re.compile(value)
         match = pattern.match(message)
         if match:
