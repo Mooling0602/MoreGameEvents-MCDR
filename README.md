@@ -50,7 +50,7 @@ def on_player_death(server: PluginServerInterface, player, event, content):
     weapon: str = content.death.weapon # 击杀者所用武器
     # 由于几乎所有服务端都默认输出英文日志，因此需要进行二次开发，使用event对整个死亡消息进行翻译以及翻译killer（若击杀者为怪物）
     # 本人已开发了一个适用于此的插件，开源后将在下方给出链接以供参考
-    # 链接：
+    # 链接：https://github.com/Mooling0602/DeathTips-MCDR
     # 你也可以自行处理这些
 
 # 此部分暂未实现，仅供参考！
