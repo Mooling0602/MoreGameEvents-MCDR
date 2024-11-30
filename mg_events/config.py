@@ -1,8 +1,9 @@
 import os
 import re
+import json
 
 from mcdreforged.api.all import *
-from jtl_api import lang_loader # type: ignore
+from .utils.death import generate_template
 
 psi = ServerInterface.psi()
 
@@ -13,19 +14,28 @@ plgSelf = psi.get_self_metadata()
 plgLoaded = False
 
 geyser_config = {
-    "raw_lang": f"{serverDir}/plugins/Geyser-Spigot/locales/en_us.json"
+    "raw_lang": f"{serverDir}/plugins/Geyser-Spigot/locales/en_us.json",
+    "use_json5": False
 }
 
 default_config = {
-    "raw_lang": f"{configDir}/en_us.json"
+    "raw_lang": f"{configDir}/en_us.json",
+    "use_json5": False
 }
 
-@new_thread(f'ConfigLoader: {plgSelf.id}')
+def extract_file(file_path, target_path):
+    with psi.open_bundled_file(file_path) as file_handler:
+        with open(target_path, 'wb') as target_file:
+            target_file.write(file_handler.read())
+
+# @new_thread(f'ConfigLoader: {plgSelf.id}')
 def check_config(server: PluginServerInterface):
     global config
     server.logger.info("Supported events at present: death, advancement.")
     if os.path.exists(geyser_config["raw_lang"]):
         useGeyserLocales = True
+    else:
+        useGeyserLocales = False
     if useGeyserLocales:
         server.logger.info("Detected Geyser installation, using locales from it.")
         config = server.load_config_simple('config.json', geyser_config)
@@ -34,14 +44,23 @@ def check_config(server: PluginServerInterface):
     load_config(server)
 
 def load_config(server: PluginServerInterface):
-    global rawLangPath, langRegion, lang, plgLoaded
+    global rawLangPath, langRegion, lang, template, plgLoaded
+    if not os.path.exists(f"{configDir}/en_us.json"):
+        server.logger.info("Automatically extracting built-in lang file, region: en_us, ver: 1.21.1")
+        extract_file('lang/en_us.json', f'{configDir}/en_us.json')
     rawLangPath = config["raw_lang"]
     if os.path.exists(rawLangPath):
         server.logger.info("Lang file exists, loading plugin...")
         langRegion = os.path.splitext(os.path.basename(rawLangPath))[0]
         if not re.match(r'^[a-z]{2}_[a-z]{2}$', langRegion):
             langRegion = None
-        lang = lang_loader(rawLangPath)
+        with open(f'{rawLangPath}', 'r') as f:
+            if config["use_json5"]:
+                import json5
+                lang = json5.load(f)
+            else:
+                lang = json.load(f)
+        template = generate_template(lang)
         server.logger.info("Loading plugin finished!")
         plgLoaded = True
     else:

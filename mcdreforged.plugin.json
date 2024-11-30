@@ -1,14 +1,13 @@
 {
 	"id": "mg_events",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"name": "MoreGameEvents",
 	"description": {
 		"en_us": "Add more game events to MCDR.",
 		"zh_cn": "向MCDR添加更多的游戏事件！"
 	},
 	"dependencies": {
-		"mcdreforged": ">=2.1.0",
-		"jtl_api": ">=0.2.0"
+		"mcdreforged": ">=2.1.0"
 	},
 	"author": "Mooling0602",
     "link": "https://github.com/Mooling0602/MoreGameEvents-MCDR"
