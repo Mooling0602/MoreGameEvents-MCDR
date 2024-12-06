@@ -1,5 +1,5 @@
 from mcdreforged.api.all import *
-from ..config import langRegion, template
+from ..config import langRegion, template_death
 from ..utils import content
 from ..utils.death import parse
 
@@ -12,7 +12,7 @@ class PlayerDeathEvent(PluginEvent):
 
 @new_thread('EventListener: death')
 def main(server: PluginServerInterface, info: Info):
-    death_data = parse(template, info.content)
+    death_data = parse(template_death, info.content)
     if death_data is not None:
         event = death_data.get('key')
         contentInstance = content()

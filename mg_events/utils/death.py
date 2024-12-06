@@ -1,11 +1,15 @@
 import re
 import copy
+from mcdreforged.api.all import *
+
+psi = ServerInterface.psi()
 
 def generate_template(lang):
     lang_copy = copy.deepcopy(lang)
     to_delete = []
     for key, value in lang_copy.items():
         if key.startswith("death."):
+            value: str
             value = generate_pattern(value)
             lang_copy[key] = value
         else:
@@ -15,7 +19,7 @@ def generate_template(lang):
     return lang_copy
 
 def generate_pattern(format_string):
-    pattern = re.escape(format_string)
+    # pattern = re.escape(format_string)
     # 替换 %1$s、%2$s 和 %3$s 为对应的捕获组
     replacements = {
         r"%1\$s": r"(?P<player>\w+)",  # 匹配玩家名
@@ -23,8 +27,9 @@ def generate_pattern(format_string):
         r"%3\$s": r"(?P<weapon>\[[^\]]+\])"  # 匹配武器
     }
     for placeholder, regex in replacements.items():
-        pattern = pattern.replace(placeholder, regex)
+        format_string = format_string.replace(placeholder, regex)
     # 添加开头和结尾标记
+    pattern = re.escape(format_string)
     return f"^{pattern}$"
 
 def parse(template, message):
