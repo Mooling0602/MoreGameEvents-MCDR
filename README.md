@@ -41,8 +41,8 @@ README和文档部分默认不会支持简体中文和英文以外的其他语�
 from mcdreforged.api.all import *
 
 def on_load(server: PluginServerInterface, prev_module):
-    server.register_event_listener("PlayerDeathEvent", on_player_death)
-    server.register_event_listener("PlayerAdvancementEvent", on_player_advancement)
+    server.register_event_listener("PlayerDeathEvent", on_player_death) # 需要死亡事件时进行注册
+    server.register_event_listener("PlayerAdvancementEvent", on_player_advancement) # 需要成就事件时进行注册
 
 def on_player_death(server: PluginServerInterface, player, event, content):
     player: str = player
