@@ -43,6 +43,7 @@ from mcdreforged.api.all import *
 
 def on_load(server: PluginServerInterface, prev_module):
     server.register_event_listener("PlayerDeathEvent", on_player_death)
+    server.register_event_listener("PlayerAdvancementEvent", on_player_advancement)
 
 def on_player_death(server: PluginServerInterface, player, event, content):
     player: str = player
