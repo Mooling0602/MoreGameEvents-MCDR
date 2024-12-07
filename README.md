@@ -67,7 +67,7 @@ def on_player_advancement(server: PluginServerInterface, player, event, content)
 ## 语言文件要求及适配指南
 - 仅对本插件而言，要求raw_lang（一般为英文，为服务端输出的所用的语言文件）
 - 对据本插件进行了二次开发的插件的用户而言，要求raw_lang和tr_lang（用于翻出译文的语言文件，需和raw_lang严格对应），如果两个文件不相同的话
-> tr_lang在下游插件使用
+> tr_lang在下游插件使用，需要开发者支持
 - 插件将原生支持Geyser互通服，如果检测到Geyser的语言文件路径，会自动使用（最开箱即用的一集）
 - 服务端和其中安装的Mod应该含有raw_lang，你必须将这些分散的语言文件合成为一个，并存放在插件的配置目录中
 - 客户端和其中安装的Mod应该同时含有raw_lang和tr_lang，你必须将分散的tr_lang合成为一个，并存放在下游插件的配置目录中
