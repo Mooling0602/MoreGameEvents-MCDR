@@ -17,6 +17,7 @@ def main(server: PluginServerInterface, info: Info):
         event = death_data.get('key')
         contentInstance = content()
         contentInstance.lang = langRegion
+        contentInstance.raw = info.content
         deathInstance = contentInstance.death()
         player = death_data.get('player')
         killer = death_data.get('killer')
