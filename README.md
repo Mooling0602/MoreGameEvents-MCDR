@@ -5,7 +5,6 @@
 
 ## 适用范围
 各种Java版游戏服务端，非模组端支持最好
-> 简中能跑的话，其他语言大概也没问题罢
 
 README和文档部分默认不会支持简体中文和英文以外的其他语言，但欢迎PR
 
@@ -29,6 +28,7 @@ README和文档部分默认不会支持简体中文和英文以外的其他语�
 - content 事件内容（字典）
 - [1]content.lang 事件信息原始info输出的语言类型，你可以据此判断是否需要进行二次翻译
 - content.raw 事件信息的原始info输出，如“Steve被僵尸杀死了”（虽然我觉得除了英文用户，一般用不到）
+> 将于v0.3+版本提供。
 - content.advancement 成就名称（仅成就事件，暂未实现）
 - content.death.killer 击杀者（杀死玩家的人或怪物），若没有则返回None
 - content.death.weapon 击杀者使用的武器（参考上一条），若没有则返回None
@@ -41,22 +41,24 @@ README和文档部分默认不会支持简体中文和英文以外的其他语�
 from mcdreforged.api.all import *
 
 def on_load(server: PluginServerInterface, prev_module):
-    server.register_event_listener("PlayerDeathEvent", on_player_death)
+    server.register_event_listener("PlayerDeathEvent", on_player_death) # 需要死亡事件时进行注册
+    server.register_event_listener("PlayerAdvancementEvent", on_player_advancement) # 需要成就事件时进行注册
 
 def on_player_death(server: PluginServerInterface, player, event, content):
     player: str = player
-    event: str = event # 翻译键名称
+    event: str = event # 死亡类型（翻译键名称）
     killer: str = content.death.killer # 击杀者，玩家或怪物名称
-    weapon: str = content.death.weapon # 击杀者所用武器
+    weapon: str = content.death.weapon # 击杀者所用武器（保留了中括号）
     # 由于几乎所有服务端都默认输出英文日志，因此需要进行二次开发，使用event对整个死亡消息进行翻译以及翻译killer（若击杀者为怪物）
     # 本人已开发了一个适用于此的插件，开源后将在下方给出链接以供参考
     # 链接：https://github.com/Mooling0602/DeathTips-MCDR
     # 你也可以自行处理这些
 
-# 此部分暂未实现，仅供参考！
+# 于 v0.2.0 添加
 def on_player_advancement(server: PluginServerInterface, player, event, content):
-    player: str = player
-    advancement: str = content.advancement
+    player: str = player # 玩家名
+    event: str = event # 成就类型（翻译键名称）
+    advancement: str = content.advancement # 成就内容（保留了中括号）
 ```
 
 ### 备注
@@ -65,7 +67,7 @@ def on_player_advancement(server: PluginServerInterface, player, event, content)
 ## 语言文件要求及适配指南
 - 仅对本插件而言，要求raw_lang（一般为英文，为服务端输出的所用的语言文件）
 - 对据本插件进行了二次开发的插件的用户而言，要求raw_lang和tr_lang（用于翻出译文的语言文件，需和raw_lang严格对应），如果两个文件不相同的话
-> tr_lang在下游插件使用
+> tr_lang在下游插件使用，需要开发者支持
 - 插件将原生支持Geyser互通服，如果检测到Geyser的语言文件路径，会自动使用（最开箱即用的一集）
 - 服务端和其中安装的Mod应该含有raw_lang，你必须将这些分散的语言文件合成为一个，并存放在插件的配置目录中
 - 客户端和其中安装的Mod应该同时含有raw_lang和tr_lang，你必须将分散的tr_lang合成为一个，并存放在下游插件的配置目录中
