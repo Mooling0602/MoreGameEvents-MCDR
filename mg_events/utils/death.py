@@ -22,8 +22,8 @@ def generate_pattern(format_string):
     # pattern = re.escape(format_string)
     # 替换 %1$s、%2$s 和 %3$s 为对应的捕获组
     replacements = {
-        r"%1$s": r"(?P<player>\w+)",  # 匹配玩家名
-        r"%2$s": r"(?P<killer>\w+)",  # 匹配杀手名
+        r"%1$s": r"(?P<player>.\w+|\w+)",  # 匹配玩家名
+        r"%2$s": r"(?P<killer>.\w+|\w+)",  # 匹配杀手名
         r"%3$s": r"(?P<weapon>\[[^\]]+\])"  # 匹配武器
     }
     for placeholder, regex in replacements.items():
