@@ -1,7 +1,9 @@
+import mg_events.data as data
+
 from mcdreforged.api.all import *
-from ..config import langRegion, template_death
 from ..utils import content
 from ..utils.death import parse
+
 
 class PlayerDeathEvent(PluginEvent):
     def __init__(self, player: str, event: str, content: dict):
@@ -12,11 +14,11 @@ class PlayerDeathEvent(PluginEvent):
 
 @new_thread('EventListener: death')
 def main(server: PluginServerInterface, info: Info):
-    death_data = parse(template_death, info.content)
+    death_data = parse(data.template_death, info.content)
     if death_data is not None:
         event = death_data.get('key')
         contentInstance = content()
-        contentInstance.lang = langRegion
+        contentInstance.lang = data.langRegion
         contentInstance.raw = info.content
         deathInstance = contentInstance.death()
         player = death_data.get('player')
@@ -24,7 +26,6 @@ def main(server: PluginServerInterface, info: Info):
         weapon = death_data.get('weapon')
         deathInstance.killer = killer
         deathInstance.weapon = weapon
-        deathInstance.raw = info.content
         contentInstance.death = deathInstance
 
         eventInstance = PlayerDeathEvent(player, event, contentInstance)

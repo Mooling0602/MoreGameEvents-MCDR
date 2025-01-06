@@ -1,14 +1,17 @@
 import re
 import copy
+import mg_events.data as data
+
 from mcdreforged.api.all import *
 
 psi = ServerInterface.psi()
+
 
 def generate_template(lang):
     lang_copy = copy.deepcopy(lang)
     to_delete = []
     for key, value in lang_copy.items():
-        if key.startswith("death."):
+        if key.startswith("death.") or key in data.death_keys_extralist:
             value: str
             value = generate_pattern(value)
             lang_copy[key] = value

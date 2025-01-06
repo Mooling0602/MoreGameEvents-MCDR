@@ -1,6 +1,6 @@
 {
 	"id": "mg_events",
-	"version": "0.2.3",
+	"version": "0.3.0",
 	"name": "MoreGameEvents",
 	"description": {
 		"en_us": "Add more game events to MCDR.",
