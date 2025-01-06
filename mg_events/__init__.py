@@ -7,6 +7,8 @@ from .config import check_config
 
 def on_load(server: PluginServerInterface, prev_module):
     check_config(server)
+    if server.is_server_startup() and data.plgLoaded:
+        server.logger.info("MoreGameEvents is working...")
 
 def on_server_startup(server: PluginServerInterface):
     if data.plgLoaded:
