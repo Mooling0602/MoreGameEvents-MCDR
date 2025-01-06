@@ -15,24 +15,23 @@ README和文档部分默认不会支持简体中文和英文以外的其他语�
 ## 为什么需要此插件
 - 为消息互通开发提供更丰富的游戏内事件信息
 - 结合Minecraft Data API，为诸如“返回死亡点”等更丰富的玩法开发设计提供基础
-- 其他（等待有缘人丰富此内容）
+- 其他（欢迎参与下游开发，或者为此项目做贡献！）
 
 ## 工作原理
-将控制台输出的死亡、成就等提示消息，根据游戏语言文件进行解析，并派发成相关事件供下游插件处理。
+将控制台输出的死亡、成就等提示消息，根据游戏的语言文件进行解析，并派发成相关事件供下游插件处理。
 
-因此，本插件并不能用于直接实现“死亡播报”等功能，需要配合下游插件使用。
+因此，本插件仅为没有任何实际功能的API，并不能用于直接实现“死亡播报”等功能，需要配合下游插件使用。
 
+## 文档（简易版）
 考虑到多语言支持，插件并不会直接将识别到的info翻译成中文或类似操作，而是在派发的事件中提供以下内容：
 - player 玩家名
 - event 事件类型（直接使用翻译键名称即key）
 - content 事件内容（字典）
 - [1]content.lang 事件信息原始info输出的语言类型，你可以据此判断是否需要进行二次翻译
-- content.raw 事件信息的原始info输出，如“Steve被僵尸杀死了”（虽然我觉得除了英文用户，一般用不到）
-> 将于v0.3+版本提供。
+- content.raw 事件信息的原始info输出，如“Steve被僵尸杀死了”
 - content.advancement 成就名称（仅成就事件，暂未实现）
 - content.death.killer 击杀者（杀死玩家的人或怪物），若没有则返回None
 - content.death.weapon 击杀者使用的武器（参考上一条），若没有则返回None
-> 目前插件仍处于早期开发（v0.x）阶段。针对以上内容，可能会随时做出修改，也欢迎各位提出建议！
 
 然后，开发者可二次处理这些信息，并将其转发到需要的地方（例如消息互通转发到其他平台）或进行其他的插件开发。
 
@@ -53,18 +52,25 @@ def on_player_death(server: PluginServerInterface, player, event, content):
     # 本人已开发了一个适用于此的插件，开源后将在下方给出链接以供参考
     # 链接：https://github.com/Mooling0602/DeathTips-MCDR
     # 你也可以自行处理这些
+    if content.lang == "zh_cn":
+        transfer(content.raw) # 当语言区域为简体中文时，下游无需处理，直接转发使用
 
 # 于 v0.2.0 添加
 def on_player_advancement(server: PluginServerInterface, player, event, content):
     player: str = player # 玩家名
     event: str = event # 成就类型（翻译键名称）
     advancement: str = content.advancement # 成就内容（保留了中括号）
+    if content.lang == "zh_cn":
+        transfer(content.raw) # 当语言区域为简体中文时，下游无需处理，直接转发使用
+
+def transfer():
+    pass # 实现你的转发逻辑
 ```
 
 ### 备注
 [1] 理论上这一部分可以支持输出中文log的服务端，但是这可能导致其他MCDR插件和MCDR本体无法正常解析服务器日志内容，故不推荐启用服务端的中文或其他语言log
 
-## 语言文件要求及适配指南
+## 语言文件要求及适配指南（已存档，不再更新）
 - 仅对本插件而言，要求raw_lang（一般为英文，为服务端输出的所用的语言文件）
 - 对据本插件进行了二次开发的插件的用户而言，要求raw_lang和tr_lang（用于翻出译文的语言文件，需和raw_lang严格对应），如果两个文件不相同的话
 > tr_lang在下游插件使用，需要开发者支持
