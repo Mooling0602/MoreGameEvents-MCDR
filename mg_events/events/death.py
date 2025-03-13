@@ -30,4 +30,4 @@ def main(server: PluginServerInterface, info: Info):
 
         eventInstance = PlayerDeathEvent(player, event, contentInstance)
         server.dispatch_event(eventInstance, (player, event, contentInstance))
-        # server.logger.info("Dispatching death event...")
+        server.logger.debug("Dispatching death event...")

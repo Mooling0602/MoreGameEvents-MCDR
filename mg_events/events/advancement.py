@@ -26,3 +26,4 @@ def main(server: PluginServerInterface, info: Info):
 
         eventInstance = PlayerAdvancementEvent(player, event, contentInstance)
         server.dispatch_event(eventInstance, (player, event, contentInstance))
+        server.logger.debug("Dispatching advancement event...")
