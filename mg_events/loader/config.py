@@ -4,7 +4,7 @@ import mg_events.data.runtime as rt
 
 from mcdreforged.api.all import *
 from mg_events.utils import extract_file
-from .lang import load_lang
+from .lang import load_lang, lang_manager
 
 
 class LangConfigFormat(Serializable):
@@ -33,9 +33,4 @@ def load_config(server: PluginServerInterface):
         raise ValueError(f'Invalid lang file ({raw_lang_path}) may configured, plz check your config.')
     if not raw_lang_loaded:
         load_lang(server, raw_lang_path)
-    others_lang_path = cfg.plugin_config.lang_file.others
-    if others_lang_path is not None:
-        if isinstance(others_lang_path, list) and len(others_lang_path) > 0:
-            for i in others_lang_path:
-                if os.path.exists(i):
-                    load_lang(server, i)
+    lang_manager(server)

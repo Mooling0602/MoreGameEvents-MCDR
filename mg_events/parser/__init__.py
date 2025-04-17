@@ -1,5 +1,6 @@
 import mg_events.data.template as template
 import mg_events.data.config as cfg
+import mg_events.data.runtime as rt
 
 from mcdreforged.api.all import *
 from mg_events.utils import get_raw_locale, get_other_locales
@@ -8,7 +9,6 @@ from mg_events.event import advancement as event_advancement
 from . import death, advancement
 
 
-@new_thread('Loader(mg_events): LoadTemplate')
 def load_templates(server: PluginServerInterface):
     raw_locale = get_raw_locale()
     other_locales = get_other_locales()
@@ -19,6 +19,7 @@ def load_templates(server: PluginServerInterface):
     for i in other_locales:
         template.advancement[i] = advancement.generate_format(cfg.lang.get(i, None))
     server.logger.info("Templates for parsing are loaded!")
+    rt.load_complete = True
 
 @new_thread('Parser(mg_events): DispathGameEvents')
 def parse_content(server: PluginServerInterface, message: str):

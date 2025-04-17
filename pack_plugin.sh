@@ -1,1 +1,3 @@
-zip -r "MoreGameEvents-v1.0.0.mcdr" mg_events lang LICENSE mcdreforged.plugin.json
+#!/bin/bash
+export PATH="$PATH:$HOME/.local/bin"
+mcdreforged pack
