@@ -37,13 +37,15 @@ def load_json(file_path: str, use_json5: bool, encodings=('utf-8', 'gbk')):
     raise UnicodeDecodeError(f"Failed to decode {file_path} with encodings: {encodings}")
 
 def parse_dict_value(data: dict, key: str):
-    return data.get(key, None)
+    # [ISSUE-4/ISSUE-7] If the key is not found, return the original key
+    return data.get(key, key)
 
 def parse_dict_key(data: dict, value: str):
-    for k, v in data.items():
-        if v == value:
-            return k
-    return None
+    reverse_dict = {v: k for k, v in data.items()}
+
+    # [ISSUE-4/ISSUE-7] If the value is not found, return the original value
+    return reverse_dict.get(value, value)
+
 
 def get_raw_locale() -> str:
     return os.path.splitext(os.path.basename(cfg.plugin_config.lang_file.raw))[0]
